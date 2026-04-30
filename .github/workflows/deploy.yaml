@@ -1,0 +1,35 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build Docker Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/aiops-app:latest .
+
+    - name: Push Docker Image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/aiops-app:latest
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+        aws-region: ap-south-1
+
+    - name: Update kubeconfig
+      run: aws eks update-kubeconfig --name aiops-cluster --region ap-south-1
+
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f k8s/deployment.yaml
