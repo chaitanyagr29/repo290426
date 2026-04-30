@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: aiops
-        image: ${{ secrets.DOCKER_USERNAME }}/aiops-app:latest
+        image: chaitanyagaajula/aiops-app:latest
         ports:
         - containerPort: 5000
         - containerPort: 8000
