@@ -32,7 +32,7 @@ jobs:
         run: aws eks update-kubeconfig --name my-cluster-demo --region ap-south-1
 
       - name: Deploy Deployment
-        run: kubectl apply -f k8s/deployment.yaml
+        run: kubectl apply -f k8s/depployment.yaml
 
       - name: Deploy Service
         run: kubectl apply -f k8s/service.yaml
