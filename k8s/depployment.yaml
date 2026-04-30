@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app: aiops
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
     spec:
       containers:
       - name: aiops
@@ -18,4 +21,3 @@ spec:
         ports:
         - containerPort: 5000
         - containerPort: 8000
-
