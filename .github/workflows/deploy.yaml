@@ -29,7 +29,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Update kubeconfig
-      run: aws eks update-kubeconfig --name aiops-cluster --region ap-south-1
+      run: aws eks update-kubeconfig --name my-cluster-demo --region ap-south-1
 
     - name: Deploy to Kubernetes
       run: kubectl apply -f k8s/deployment.yaml
