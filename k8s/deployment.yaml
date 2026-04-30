@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiops-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aiops
+  template:
+    metadata:
+      labels:
+        app: aiops
+    spec:
+      containers:
+      - name: aiops
+        image: ${{ secrets.DOCKER_USERNAME }}/aiops-app:latest
+        ports:
+        - containerPort: 5000
+        - containerPort: 8000
+
